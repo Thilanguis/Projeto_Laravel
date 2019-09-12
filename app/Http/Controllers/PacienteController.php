@@ -37,7 +37,7 @@ class PacienteController extends Controller
         ]);
     
         if ($validator->fails()) {
-            return redirect('/')
+            return redirect('/adicionar')
                 ->withInput()
                 ->withErrors($validator);
         }
@@ -52,7 +52,6 @@ class PacienteController extends Controller
         //     'mensagem2' => 'olá! eu sou a segunda mensagem'
         //     'mensagem3' => 'olá! eu sou a terceira mensagem'
         // ]);
-
     }
     catch(\Exception $e){
         // dd($e->getMessage());
@@ -73,6 +72,10 @@ class PacienteController extends Controller
         $paciente = Paciente::find($pacienteId);
         return view('editar', [
         'paciente' => $paciente]);
+    }
+
+    public function create() {
+        return view('adicionar');
     }
 
     public function editar($pacienteId, Request $request) {

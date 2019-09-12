@@ -31,8 +31,8 @@
                             </tbody>
                         </table>
                             
-                                <input type="submit" class="btn btn-primary" value="Atualizar">
-                            </form>
+                                 <input type="submit" class="btn btn-primary" value="Atualizar">
+                                </form>
                     </div>
                 </div>
            

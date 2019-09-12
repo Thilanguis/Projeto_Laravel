@@ -15,6 +15,8 @@ use App\Paciente;
 
 Route::get('/', 'PacienteController@index');
 
+Route::get('/adicionar', 'PacienteController@create');
+
 Route::post('/task','PacienteController@gravar');
 
 Route::delete('/task/{task}', 'PacienteController@deletar');
