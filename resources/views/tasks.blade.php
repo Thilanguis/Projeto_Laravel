@@ -78,11 +78,11 @@
 
                                         <!-- Task Delete Button -->
                                         <td>
-                                            <form action="{{ url('task/'.$paciente->id) }}" method="POST">
+                                            <form action="{{ url('task/'.$paciente->id) }}" method="POST" class="deleta">
                                                 {{ csrf_field() }} 
                                                 {{ method_field('DELETE') }}
 
-                                                <button type="submit" class="btn btn-danger">
+                                                <button type="submit" class="btn btn-danger deletar">
                                                     <i class="fa fa-btn fa-trash"></i>Deletar
                                                 </button>
                                             </form>

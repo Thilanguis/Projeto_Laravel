@@ -76,18 +76,35 @@ module.exports = __webpack_require__(46);
 /***/ 46:
 /***/ (function(module, exports) {
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-// class Action {
-//     constructor(){
-//         $('#adicionar').on('click', (e) => {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-//         })
+var Action = function () {
+    function Action() {
+        var _this = this;
 
-//     }
-// }
+        _classCallCheck(this, Action);
 
-// let action = new Action
-bootbox.alert("Your message here…");
+        $('.deletar').on('click', function (e) {
+            e.preventDefault();
+            _this.confirmaDelecao();
+        });
+    }
+
+    _createClass(Action, [{
+        key: 'confirmaDelecao',
+        value: function confirmaDelecao() {
+            bootbox.confirm("Você tem certeza que quer excluir isso?", function (result) {
+                $('.deletar').first().closest('.deleta').submit();
+            });
+        }
+    }]);
+
+    return Action;
+}();
+
+var action = new Action();
 
 /***/ })
 
