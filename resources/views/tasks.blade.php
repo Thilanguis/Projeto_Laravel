@@ -1,19 +1,32 @@
 @extends('layouts.app')
 
+@section('css')
+    <link href="{{ elixir('css/testecss.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
     <div class="container">
         <div class="col-sm-offset-2 col-sm-8">
-
-            <!-- Current Tasks -->
-            @if (count($pacientes) > 0)
+        <a class="" href="{{ url('/adicionar') }}"><i class="fas fa-plus-circle"></i><p>Adicionar paciente</p></a>
+        
+        <form action="{{url('/')}}" method="GET">            
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <input value="{{ old('busca') }}" type="text" class="form-control" name="busca">
+                </div>
+                <div class="form-group col-md-6">
+                    <button type="submit"><i class="fab fa-searchengin"></i></button>
+                </div>
+            </div>
+        </form>
+                <!-- Current Tasks -->
                 <div class="panel panel-default">
-                @include('partials.feedback')
-                @include('common.errors')
+                    @include('partials.feedback')
+                    @include('common.errors')
                     <div class="panel-heading">
                         Lista de Pacientes
-                        <a class="btn btn-primary" href="{{ url('/adicionar') }}">Adicionar</a>
                     </div>
-
+                        @if (count($pacientes) > 0)
                     <div class="panel-body">
                         <table class="table table-striped task-table">
                             <thead>
@@ -58,7 +71,7 @@
                         </table>
                     </div>
                 </div>
-            @endif
+            @endif 
         </div>
     </div>
 @endsection

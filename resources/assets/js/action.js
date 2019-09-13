@@ -1,18 +1,25 @@
 class Action {
     constructor(){
+        this.nome = 'joao'
         $('.deletar').on('click', (e) =>{
             e.preventDefault()
-            this.confirmaDelecao()
+            this.confirmaDelecao(e)
         })
-    
     }
  
-    confirmaDelecao(){
-        bootbox.confirm("Você tem certeza que quer excluir isso?", function(result){
-            $('.deletar').first().closest('.deleta').submit()
+    confirmaDelecao(event){
+        console.log(event)
+        bootbox.confirm("Você tem certeza que quer excluir isso?", (result) => {
+            console.log(result)
+            if(result == true){
+                $(event.target).closest('.deleta').submit()
+            }
+
+            bootbox.hideAll()
+            return false
         })
-        bootbox.prompt(closeButton,false)
     }
 }
  
 let action = new Action
+

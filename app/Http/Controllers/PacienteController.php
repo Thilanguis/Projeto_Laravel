@@ -17,10 +17,29 @@ class PacienteController extends Controller
      * @return Response
      */
     // Consultar Pacientes
-    public function index()
+    public function index(Request $request)
     {
-        $pacientes = Paciente::orderBy('created_at', 'asc')->get();
-
+        try{
+            // $pacientes = Paciente::orderBy('created_at', 'asc')->get();
+            $valor = $request->busca;
+            $pacientes = collect();
+            if($request->input()){
+                if($request->busca != null){
+                    $pacientes = Paciente::where('nome', 'like', $request->busca)->get();
+                }
+                
+                if($pacientes->count() == 0 && $valor != null){
+                    $request->session()->flash('error', "O paciente {$valor} não foi encontrado");
+                } else if($valor == null){
+                    $request->session()->flash('error', "O campo de busca não pode estar vazio");
+                }
+            }
+            
+        }
+        catch(Exception $e){
+            dd($e);
+        }
+        
         return view('tasks', [
             'pacientes' => $pacientes
         ]);
@@ -53,7 +72,7 @@ class PacienteController extends Controller
         //     'mensagem3' => 'olá! eu sou a terceira mensagem'
         // ]);
     }
-    catch(\Exception $e){
+    catch(Exception $e){
         // dd($e->getMessage());
         $request->session()->flash('error', "Ops, não adicionou");
     }

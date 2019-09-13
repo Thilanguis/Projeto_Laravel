@@ -60,20 +60,20 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 45);
+/******/ 	return __webpack_require__(__webpack_require__.s = 42);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 45:
+/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(46);
+module.exports = __webpack_require__(43);
 
 
 /***/ }),
 
-/***/ 46:
+/***/ 43:
 /***/ (function(module, exports) {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -86,17 +86,25 @@ var Action = function () {
 
         _classCallCheck(this, Action);
 
+        this.nome = 'joao';
         $('.deletar').on('click', function (e) {
             e.preventDefault();
-            _this.confirmaDelecao();
+            _this.confirmaDelecao(e);
         });
     }
 
     _createClass(Action, [{
         key: 'confirmaDelecao',
-        value: function confirmaDelecao() {
+        value: function confirmaDelecao(event) {
+            console.log(event);
             bootbox.confirm("Você tem certeza que quer excluir isso?", function (result) {
-                $('.deletar').first().closest('.deleta').submit();
+                console.log(result);
+                if (result == true) {
+                    $(event.target).closest('.deleta').submit();
+                }
+
+                bootbox.hideAll();
+                return false;
             });
         }
     }]);
