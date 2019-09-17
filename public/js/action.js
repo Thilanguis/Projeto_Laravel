@@ -114,6 +114,20 @@ var Action = function () {
 
 var action = new Action();
 
+$(document).ready(function () {
+    $('.fa-plus').on('click', function () {
+        var endereco = $('.enderecoClone').clone(true);
+        endereco.removeClass('hide');
+        endereco.removeClass('enderecoClone');
+        endereco.addClass('endereco');
+        $('#enderecos').append(endereco);
+    });
+
+    $('.fa-minus-circle').on('click', function () {
+        if ($('.endereco').length > 1) $('.endereco').last().remove();
+    });
+});
+
 /***/ })
 
 /******/ });

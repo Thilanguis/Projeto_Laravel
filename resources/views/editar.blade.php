@@ -30,9 +30,9 @@
                                         <td><input name="nome" value="{{$paciente->nome}}" class="table-text"></td>
                                         <td><input disabled value="{{$paciente->created_at}}" class="table-text"></td>    
                                         @foreach($paciente->enderecos as $endereco)                                
-                                        <td><input value="{{$endereco->rua}}" name="rua[]" class="table-text"></td>                                    
-                                        <td><input value="{{$endereco->numero}}" name="numero[]" class="table-text"></td>                                    
-                                        <td><input value="{{$endereco->complemento}}" name="complemento[]" class="table-text"></td>  
+                                        <td><input value="{{$endereco->rua}}" name="rua[]" type="text" class="table-text"></td>                                    
+                                        <td><input value="{{$endereco->numero}}" name="numero[]" type="number" class="table-text"></td>                                    
+                                        <td><input value="{{$endereco->complemento}}" name="complemento[]" type="text" class="table-text"></td>  
                                         @endforeach                                  
                                     </tr>
                                

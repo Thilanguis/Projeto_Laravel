@@ -6,37 +6,27 @@
 
             <!-- Current Tasks -->
            
-                <div class="panel panel-default">
+                <div class="panel panel-default animated rollIn">
                     <div class="panel-heading">
-                        Current Tasks
+                        Dados do {{$paciente->nome}}
                     </div>
 
                     <div class="panel-body">
                         <table class="table table-striped task-table">
-                            <thead>
-                                <th>Nome</th>
-                                <th>Sobrenome</th>
-                                <th>Registro</th>
-                                <th>Rua</th>
-                                <th>Número</th>
-                                <th>Complemento</th>
-                                <th>&nbsp;</th>
-                            </thead>
+                          
                             
                             <tbody>
-                               
                                     {{ csrf_field() }} 
                                     {{ method_field('PUT') }}
                                     <tr>
-                                       
-                                        <td class="table-text"><div>{{ $paciente->nome }}</div></td>
-                                        <td class="table-text"><div>{{ $paciente->sobrenome }}</div></td>
-                                        <td class="table-text"><div>{{ $paciente->created_at }}</div></td>
+                                        <div><label for="">Nome:</label>&nbsp;{{ $paciente->nome }}</div>
+                                        <div><label for="">Sobrenome:</label>&nbsp;{{ $paciente->sobrenome }}</div>
+                                        <div><label for="">Registro:</label>{{ $paciente->created_at }}&nbsp;</div>
                                         
-                                        @foreach($paciente->enderecos as $endereco)
-                                            <td class="table-text"><div>{{ $endereco->rua }}</div></td>
-                                            <td class="table-text"><div>{{ $endereco->numero }}</div></td>
-                                            <td class="table-text"><div>{{ $endereco->complemento }}</div></td>
+                                        @foreach($paciente->enderecos as $key => $endereco)
+                                            <p><div><label for="">Endereço {{ $key + 1 }}:</label>&nbsp;{{ $endereco->rua }},
+                                           {{ $endereco->numero }},
+                                            {{ $endereco->complemento }}</div></p>
                                         @endforeach                                    
                                     </tr>
                                

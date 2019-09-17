@@ -13,7 +13,7 @@ use Exception;
 class PacienteController extends Controller
 {
     /**
-     * Show the profile for the given user.
+     * 
      *
      * @return Response
      */
@@ -28,7 +28,7 @@ class PacienteController extends Controller
             
             if($request->input()){
                 if($request->busca != null){
-                    $pacientes = Paciente::where('nome', 'like', '%'.$valor.'%')->get();
+                    $pacientes = Paciente::where('nome', 'like', "%{$valor}%")->get();
                 }
                 
                 if($pacientes->count() == 0 && $valor != null){
@@ -58,8 +58,6 @@ class PacienteController extends Controller
 
     // Gravar Pacientes
     public function gravar(Request $request){
-        //dd($request->all());
-    
     try{
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:pacientes,nome|max:30',
@@ -74,17 +72,21 @@ class PacienteController extends Controller
                 ->withInput()
                 ->withErrors($validator);
         }
-    
+        
         $paciente = new Paciente;
-        $endereco = new Endereco;
         $paciente->nome = $request->name;
         $paciente->sobrenome = $request->sobrenome;
-        $endereco->rua = $request->rua;
-        $endereco->numero = $request->numero;
-        $endereco->complemento = $request->complemento;
+
         $paciente->save();
-        $endereco->pacientes_id = $paciente->id;
-        $endereco->save();
+        foreach($request->input('rua') as $key => $rua){
+            $endereco = new Endereco;
+            $endereco->rua = $request->rua[$key];
+            $endereco->numero = $request->numero[$key];
+            $endereco->complemento = $request->complemento[$key];
+            $endereco->pacientes_id = $paciente->id;
+            
+            $endereco->save();
+        }
         $request->session()->flash('success', "O paciente {$paciente->nome} foi adicionado com sucesso");
         // $request->session()->flash('success', [
         //     'mensagem1' => 'olá! eu sou a primeira mensagem'
@@ -102,6 +104,8 @@ class PacienteController extends Controller
 
     public function deletar($pacienteId){
         $paciente = Paciente::find($pacienteId);
+        // $pacientes->enderecos()->ativos()->get(); ativos() esta chamando scopeAtivos
+        $paciente->enderecos()->delete();
         $paciente->delete();
     
         return redirect('/');
