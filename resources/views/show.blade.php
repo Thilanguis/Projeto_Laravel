@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <div class="col-sm-offset-1 col-sm-10">
+        <div class="col-sm-offset-2 col-sm-8">
 
             <!-- Current Tasks -->
            
@@ -15,6 +15,7 @@
                         <table class="table table-striped task-table">
                             <thead>
                                 <th>Nome</th>
+                                <th>Sobrenome</th>
                                 <th>Registro</th>
                                 <th>Rua</th>
                                 <th>Número</th>
@@ -23,26 +24,26 @@
                             </thead>
                             
                             <tbody>
-                                <form action="{{ url('editar/'.$paciente->id) }}" method="POST">
+                               
                                     {{ csrf_field() }} 
                                     {{ method_field('PUT') }}
                                     <tr>
-                                        <td><input name="nome" value="{{$paciente->nome}}" class="table-text"></td>
-                                        <td><input disabled value="{{$paciente->created_at}}" class="table-text"></td>    
-                                        @foreach($paciente->enderecos as $endereco)                                
-                                        <td><input value="{{$endereco->rua}}" name="rua[]" class="table-text"></td>                                    
-                                        <td><input value="{{$endereco->numero}}" name="numero[]" class="table-text"></td>                                    
-                                        <td><input value="{{$endereco->complemento}}" name="complemento[]" class="table-text"></td>  
-                                        @endforeach                                  
+                                       
+                                        <td class="table-text"><div>{{ $paciente->nome }}</div></td>
+                                        <td class="table-text"><div>{{ $paciente->sobrenome }}</div></td>
+                                        <td class="table-text"><div>{{ $paciente->created_at }}</div></td>
+                                        
+                                        @foreach($paciente->enderecos as $endereco)
+                                            <td class="table-text"><div>{{ $endereco->rua }}</div></td>
+                                            <td class="table-text"><div>{{ $endereco->numero }}</div></td>
+                                            <td class="table-text"><div>{{ $endereco->complemento }}</div></td>
+                                        @endforeach                                    
                                     </tr>
                                
                             </tbody>
                         </table>
-                                    <input type="submit" class="btn btn-primary" value="Atualizar">
-                                </form>
                     </div>
                 </div>
-           
         </div>
     </div>
 @endsection

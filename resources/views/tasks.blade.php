@@ -32,7 +32,10 @@
                             <thead>
                                 <th>id</th>
                                 <th>Nome</th>
-                                <th>sobrenome</th>
+                                <th>Sobrenome</th>
+                                <th>Editar</th>
+                                <th>Mostrar</th>
+                                <th>Deletar</th>
                                 <th>&nbsp;</th>
                             </thead>
                             <tbody>
@@ -46,14 +49,18 @@
                                         <!-- Task Update Button -->
                                         <td>
                                             <form action="{{ url('editar/'.$paciente->id) }}" method="GET">
-                                                
-                                                
                                                 <button type="submit" class="btn btn-info">
                                                     <i class="fas fa-user-edit"></i> Editar
                                                 </button>
                                             </form>
                                         </td>
-
+                                        <td>
+                                          <form action="{{ url('show/'.$paciente->id) }}" method="GET">
+                                                <button type="submit" class="btn btn-primary">
+                                                <i class="far fa-eye"></i> Mostrar
+                                                </button>
+                                            </form>
+                                        </td>
                                         <!-- Task Delete Button -->
                                         <td>
                                             <form action="{{ url('task/'.$paciente->id) }}" method="POST" class="deleta">
@@ -61,7 +68,7 @@
                                                 {{ method_field('DELETE') }}
 
                                                 <button type="submit" class="btn btn-danger deletar">
-                                                    <i class="fa fa-btn fa-trash"></i>Deletar
+                                                    <i class="fa fa-btn fa-trash"></i> Deletar
                                                 </button>
                                             </form>
                                         </td>

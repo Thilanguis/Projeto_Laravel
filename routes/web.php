@@ -11,14 +11,24 @@
 |
 */
 
-Route::get('/', 'PacienteController@index');
+Auth::routes();
 
-Route::get('/adicionar', 'PacienteController@create');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', 'PacienteController@index');
+    
+    Route::get('/show/{id}', 'PacienteController@show');
+    
+    Route::get('/adicionar', 'PacienteController@create');
+    
+    Route::post('/task','PacienteController@gravar');
+    
+    Route::delete('/task/{task}', 'PacienteController@deletar');
+    
+    Route::get('/editar/{task}', 'PacienteController@indexEditar');
+    
+    Route::put('/editar/{task}', 'PacienteController@editar');
 
-Route::post('/task','PacienteController@gravar');
+    
+});    
 
-Route::delete('/task/{task}', 'PacienteController@deletar');
-
-Route::get('/editar/{task}', 'PacienteController@indexEditar');
-
-Route::put('/editar/{task}', 'PacienteController@editar');
+Route::get('/home', 'HomeController@index')->name('home');

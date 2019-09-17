@@ -1,15 +1,21 @@
 .fa-searchengin{
     font-size: 24px;
-    color: black;
+    color: black;display: inline-block;
 }
 
 .fa-plus-circle {
     font-size: 24px !important;
     margin-left: 500px;
+    display: inline-block;
 }
 
 p{
     display: inline-block;
     margin-bottom: 15px;
     margin-left: 10px;
+}
+
+#botaoAdicionarPaciente {
+    margin-top: 110px;
+    margin-left: 355px;
 }
