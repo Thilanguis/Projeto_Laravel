@@ -24,7 +24,7 @@ Route::middleware(['auth'])->group(function () {
     
     Route::delete('/task/{task}', 'PacienteController@deletar');
     
-    Route::get('/editar/{task}', 'PacienteController@indexEditar');
+    Route::get('/editar/{task}', 'PacienteController@indexEditar')->name('paciente.edit');
     
     Route::put('/editar/{task}', 'PacienteController@editar');
 

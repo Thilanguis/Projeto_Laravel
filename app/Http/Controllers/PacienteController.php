@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
 use Exception;
+use Auth;
 
 class PacienteController extends Controller
 {
@@ -25,17 +26,24 @@ class PacienteController extends Controller
             $valor = $request->busca;
             $pacientes = collect(); //inicializa uma colection vazia, tem métodos como count e outros exemplos
             $endereco = collect(); //inicializa uma colection vazia, tem métodos como count e outros exemplos
-            
+            $pacientes = Paciente::query();
             if($request->input()){
+
+                $pacientes->whereHas('users', function($query){
+                    $query->where('users_id', Auth::user()->id);
+                });
+
                 if($request->busca != null){
-                    $pacientes = Paciente::where('nome', 'like', "%{$valor}%")->get();
+                    $pacientes->where('nome', 'like', "%{$valor}%");
+                    $pacientes = $pacientes->get();                     
                 }
                 
+                   
                 if($pacientes->count() == 0 && $valor != null){
                     $request->session()->flash('error', "O paciente {$valor} não foi encontrado");
                 } else if($valor == null){
                     $request->session()->flash('error', "O campo de busca não pode estar vazio");
-                }
+                }   
             }
             
         }
@@ -51,6 +59,8 @@ class PacienteController extends Controller
     // Mostrar detalhes do paciente
     public function show($pacienteId, Request $request){
         $paciente = Paciente::find($pacienteId);
+        // dd($paciente->users, Auth::user()->pacientes);
+        // dd($paciente->users);
         return view('show', [
             'paciente' => $paciente
         ]);
@@ -62,8 +72,10 @@ class PacienteController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:pacientes,nome|max:30',
             'sobrenome' => 'required|max:30',
-            'rua' => 'required|max:30',
-            'numero' => 'required|max:30',
+            'rua' => 'required|array|max:30',
+            'rua.*' => 'required|string|distinct|max:30',
+            'numero' => 'required|array|max:30',
+            'numero.*' => 'required|string|distinct|max:30',
             'complemento' => 'max:30',
         ]);
     
@@ -87,6 +99,9 @@ class PacienteController extends Controller
             
             $endereco->save();
         }
+
+        $paciente->users()->attach(Auth::user()->id); //atribuindo o id do usuário logado no relacionamento paciente->users
+
         $request->session()->flash('success', "O paciente {$paciente->nome} foi adicionado com sucesso");
         // $request->session()->flash('success', [
         //     'mensagem1' => 'olá! eu sou a primeira mensagem'
@@ -100,12 +115,14 @@ class PacienteController extends Controller
     }
 
     return redirect('/');
+    // return redirect('/')->back()->withInput();
     }
 
     public function deletar($pacienteId){
         $paciente = Paciente::find($pacienteId);
         // $pacientes->enderecos()->ativos()->get(); ativos() esta chamando scopeAtivos
         $paciente->enderecos()->delete();
+        $paciente->users()->detach(Auth::user()->id);
         $paciente->delete();
     
         return redirect('/');
@@ -123,12 +140,31 @@ class PacienteController extends Controller
 
     public function editar($pacienteId, Request $request) {
         try{
+
+            // dd($request->input());
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|unique:pacientes,nome|max:30',
+                'sobrenome' => 'required|max:30',
+                'rua' => 'required|array|max:30',
+                'rua.*' => 'required|string|distinct|max:30',
+                'numero' => 'required|array|max:30',
+                'numero.*' => 'required|string|distinct|max:30',
+                'complemento' => 'max:30',
+            ]);
+        
+            if ($validator->fails()) {
+                return redirect()->route('paciente.edit', $pacienteId)
+                    ->withInput()
+                    ->withErrors($validator);
+            }
+
             $paciente = Paciente::find($pacienteId);
            
-            $paciente->nome = $request->nome;
+            $paciente->nome = $request->name;
+            $paciente->sobrenome = $request->sobrenome;
             // dd($paciente->enderecos);
             $paciente->enderecos()->delete();
-
+            
             foreach($request->input('rua') as $key => $rua){
                 $endereco = Endereco::make();
                 $endereco->rua = $request->rua[$key];
@@ -142,8 +178,9 @@ class PacienteController extends Controller
             $paciente->update();
             $request->session()->flash('success', "O paciente {$paciente->nome} foi atualizado com sucesso");
         }catch(Exception $e){
-            report($e);
             dd($e);
+            // report($e);
+            // dd($request->input());
             $request->session()->flash('error', "Bro, deu merda");
         }
     

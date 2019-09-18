@@ -100,12 +100,12 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'rua.*' => [
+            'required' => 'O campo rua é obrigatório CUZÃO',
         ],
-        // 'email' => [
-        //     'name' => 'O campo E-mail é obrigatório, mané!',
-        // ],
+        'numero.*' => [
+            'required' => 'O campo número é obrigatório, mané!',
+        ],
     ],
 
     /*

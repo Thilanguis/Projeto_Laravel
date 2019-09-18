@@ -7,15 +7,16 @@
 @section('content')
     <div class="container">
         <div class="col-sm-offset-2 col-sm-8">
-        <a class="" href="{{ url('/adicionar') }}"><i class="fas fa-plus-circle"></i><p>Adicionar paciente</p></a>
-        
+            <div class="itensMenu">
+                 <a class="itensMenu" href="{{ url('/adicionar') }}"><i class="fas fa-plus-circle"></i><b><p>Adicionar paciente</b></p></a>
+            </div>
         <form action="{{url('/')}}" method="GET">            
             <div class="row">
                 <div class="form-group col-md-6">
-                    <input value="{{ old('busca') }}" type="text" class="form-control" name="busca">
+                    <input type="text" class="form-control" name="busca" value="{{ old('busca') }}">
                 </div>
                 <div class="form-group col-md-6">
-                    <button type="submit"><i class="fab fa-searchengin"></i></button>
+                    <button class="" type="submit"><i class="fab fa-searchengin"></i></button>
                 </div>
             </div>
         </form>

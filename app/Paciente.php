@@ -17,4 +17,13 @@ class Paciente extends Model
 
         return $enderecoCompleto;
     }
+
+    public function users() {
+        return $this->belongsToMany('App\User', 'pacientes_users', 'pacientes_id', 'users_id');
+    }
+
+    // modelo de endereco 
+    // public function endereco() {
+        // return $this->hasOne(Endereco::class, 'pacientes_id');
+    // }
 }

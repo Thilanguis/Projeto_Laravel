@@ -52,15 +52,15 @@
                             <div class="form-row endereco">
                                 <div class="col-md-4">
                                     <label for="task-rua" class="control-label">Rua</label><i id="plus" class="fas fa-plus"></i><i class="fas fa-minus-circle"></i>
-                                    <input type="text" name="rua[]" id="task-rua" class="form-control" value="">
+                                    <input type="text" name="rua[]" id="task-rua" class="form-control" value="{{ old('rua.0') }}">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="task-numero" class=" control-label">Número</label>
-                                    <input type="number" name="numero[]" id="task-numero" class="form-control" value="">
+                                    <input type="number" name="numero[]" id="task-numero" class="form-control" value="{{ old('numero.0') }}">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="task-complemento" class="control-label">Complemento</label>
-                                    <input type="text" name="complemento[]" id="task-complemento" class="form-control" value="">
+                                    <input type="text" name="complemento[]" id="task-complemento" class="form-control" value="{{ old('complemento.0') }}">
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,13 @@
+.fa-searchengin {
+    padding-left: 4px;
+    padding-top: 5px;
+    color: rgb(16, 83, 22) !important;
+}
+
 .fa-searchengin{
     font-size: 24px;
-    color: black;display: inline-block;
+    color: black;
+    display: inline-block;
 }
 
 .fa-plus-circle {
@@ -9,10 +16,20 @@
     display: inline-block;
 }
 
+.itensMenu {
+    transition: all 0.5s;
+}
+
+.itensMenu:hover {
+    transform: scale(0.98);
+    color: rgb(136, 30, 104);
+}
+
 p{
     display: inline-block;
     margin-bottom: 15px;
     margin-left: 10px;
+    font: bolder;
 }
 
 #botaoAdicionarPaciente {
