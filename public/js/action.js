@@ -97,7 +97,8 @@ var Action = function () {
         key: 'confirmaDelecao',
         value: function confirmaDelecao(event) {
             console.log(event);
-            bootbox.confirm("Você tem certeza que quer excluir isso?", function (result) {
+            var paciente = $(event.target).closest('.linhaPaciente').find('.nomePaciente').html();
+            bootbox.confirm("Você tem certeza que quer " + paciente + " excluir?", function (result) {
                 console.log(result);
                 if (result == true) {
                     $(event.target).closest('.deleta').submit();

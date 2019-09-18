@@ -13,10 +13,10 @@
         <form action="{{url('/')}}" method="GET">            
             <div class="row">
                 <div class="form-group col-md-6">
-                    <input type="text" class="form-control" name="busca" value="{{ old('busca') }}">
+                    <input type="text" class="form-control" name="busca">
                 </div>
                 <div class="form-group col-md-6">
-                    <button class="" type="submit"><i class="fab fa-searchengin"></i></button>
+                    <button class="itensMenu" type="submit"><i class="fab fa-searchengin"></i></button>
                 </div>
             </div>
         </form>
@@ -28,6 +28,9 @@
                         Lista de Pacientes
                     </div>
                         @if (count($pacientes) > 0)
+                      
+                           
+                        
                     <div class="panel-body ">
                         <table class="table table-striped task-table">
                             <thead>
@@ -41,34 +44,36 @@
                             </thead>
                             <tbody>
                                 @foreach ($pacientes as $paciente)
-                                    <tr>
-                                        <td class="table-text"><div><i class="fas fa-id-card-alt"></i></i></div></td>
+                                <tr class="linhaPaciente">
+                                    <td class="table-text"><div><i class="fas fa-id-card-alt"></i></i></div></td>
 
-                                        <td class="table-text"><div>{{ $paciente->nome }}</div></td>
-                                        <td class="table-text"><div>{{ $paciente->sobrenome }}</div></td>
-
-                                        <!-- Task Update Button -->
+                                    <td class="table-text"><div class="nomePaciente">{{ $paciente->nome }}</div></td>
+                                    <td class="table-text"><div>{{ $paciente->sobrenome }}</div></td>
+                                    
+                                    <!-- Task Update Button -->
                                         <td>
                                             <form action="{{ url('editar/'.$paciente->id) }}" method="GET">
-                                                <button type="submit" class="btn btn-info">
-                                                    <i class="fas fa-user-edit"></i> Editar
-                                                </button>
-                                            </form>
-                                        </td>
-                                        <td>
-                                          <form action="{{ url('show/'.$paciente->id) }}" method="GET">
-                                                <button type="submit" class="btn btn-primary">
-                                                <i class="far fa-eye"></i> Mostrar
+                                            <button type="submit" class="btn btn-info">
+                                                <i class="fas fa-user-edit"></i> Editar
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="{{ url('show/'.$paciente->id) }}" method="GET">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="far fa-eye"></i> Mostrar
                                                 </button>
                                             </form>
                                         </td>
                                         <!-- Task Delete Button -->
                                         <td>
                                             <form action="{{ url('task/'.$paciente->id) }}" method="POST" class="deleta">
-                                                {{ csrf_field() }} 
-                                                {{ method_field('DELETE') }}
-
-                                                <button type="submit" class="btn btn-danger deletar">
+                                            {{ csrf_field() }} 
+                                            {{ method_field('DELETE') }}
+                                            
+                                          
+                                            
+                                            <button type="submit" class="btn btn-danger deletar">
                                                     <i class="fa fa-btn fa-trash"></i> Deletar
                                                 </button>
                                             </form>

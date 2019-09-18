@@ -118,12 +118,13 @@ class PacienteController extends Controller
     // return redirect('/')->back()->withInput();
     }
 
-    public function deletar($pacienteId){
+    public function deletar($pacienteId, Request $request){
         $paciente = Paciente::find($pacienteId);
         // $pacientes->enderecos()->ativos()->get(); ativos() esta chamando scopeAtivos
         $paciente->enderecos()->delete();
         $paciente->users()->detach(Auth::user()->id);
         $paciente->delete();
+        $request->session()->flash('success', "O paciente {$paciente->nome} foi adicionado com sucesso");
     
         return redirect('/');
     }

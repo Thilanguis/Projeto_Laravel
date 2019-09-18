@@ -9,7 +9,8 @@ class Action {
  
     confirmaDelecao(event){
         console.log(event)
-        bootbox.confirm("Você tem certeza que quer excluir isso?", (result) => {
+        var paciente = $(event.target).closest('.linhaPaciente').find('.nomePaciente').html()
+        bootbox.confirm("Você tem certeza que quer " + paciente + " excluir?", (result) => {
             console.log(result)
             if(result == true){
                 $(event.target).closest('.deleta').submit()
@@ -36,5 +37,3 @@ $(document).ready(function () {
         if($('.endereco').length >1 ) $('.endereco').last().remove()
     });
 });
-
-
