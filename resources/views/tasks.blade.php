@@ -22,15 +22,15 @@
         </form>
                 <!-- Current Tasks -->
                 <div class="panel panel-default animated zoomIn">
-                    @include('partials.feedback')
-                    @include('common.errors')
+                        
+                            @include('partials.feedback')
+                            @include('common.errors')
+                        
                     <div class="panel-heading">
                         Lista de Pacientes
                     </div>
                         @if (count($pacientes) > 0)
-                      
-                           
-                        
+      
                     <div class="panel-body ">
                         <table class="table table-striped task-table">
                             <thead>
@@ -84,7 +84,8 @@
                         </table>
                     </div>
                 </div>
-            @endif 
+                @endif 
+                <p><b>Total de Pacientes Cadastrados: {{ $pacientes->count() }}</b></p>
         </div>
     </div>
 @endsection

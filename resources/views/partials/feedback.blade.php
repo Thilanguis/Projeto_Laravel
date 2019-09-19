@@ -1,5 +1,5 @@
 @if (session('success'))
-    <div class="alert alert-success">
+    <div id="success" class="alert alert-success animated fadeIn">
         {{ session('success') }}
     </div>
 @endif
@@ -9,7 +9,7 @@
     </div>
 @endif -->
 @if (session('error'))
-        <div class="alert alert-danger">
+        <div id="success" class="alert alert-danger animated fadeIn">
             {{ session('error') }}
         </div>
 @endif

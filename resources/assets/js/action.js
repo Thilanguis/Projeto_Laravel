@@ -37,3 +37,7 @@ $(document).ready(function () {
         if($('.endereco').length >1 ) $('.endereco').last().remove()
     });
 });
+
+setTimeout(function () {
+    $('#success').hide('fast')
+}, 5000)

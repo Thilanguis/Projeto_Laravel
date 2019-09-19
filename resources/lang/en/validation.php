@@ -84,7 +84,7 @@ return [
     ],
     'string'               => 'The :attribute must be a string.',
     'timezone'             => 'The :attribute must be a valid zone.',
-    'unique'               => 'The :attribute has already been taken.',
+    'unique'               => 'O :attribute já existe.',
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
 
@@ -105,6 +105,9 @@ return [
         ],
         'numero.*' => [
             'required' => 'O campo número é obrigatório, mané!',
+        ],
+        'name' => [
+            'unique' => 'Este nome já está sendo usado',
         ],
     ],
 

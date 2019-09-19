@@ -26,9 +26,11 @@ class PacienteController extends Controller
             $valor = $request->busca;
             $pacientes = collect(); //inicializa uma colection vazia, tem métodos como count e outros exemplos
             $endereco = collect(); //inicializa uma colection vazia, tem métodos como count e outros exemplos
-            $pacientes = Paciente::query();
+        
             if($request->input()){
 
+                $pacientes = Paciente::query();
+                
                 $pacientes->whereHas('users', function($query){
                     $query->where('users_id', Auth::user()->id);
                 });

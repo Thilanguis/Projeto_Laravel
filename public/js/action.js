@@ -129,6 +129,10 @@ $(document).ready(function () {
     });
 });
 
+setTimeout(function () {
+    $('#success').hide('fast');
+}, 5000);
+
 /***/ })
 
 /******/ });
