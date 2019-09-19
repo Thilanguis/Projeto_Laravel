@@ -30,4 +30,8 @@ class User extends Authenticatable
     public function pacientes() {
         return $this->belongsToMany('App\Paciente',  'pacientes_users',  'users_id', 'pacientes_id');
     }
+
+    public function permissoes() {
+        return $this->belongsToMany('App\Permissao', 'users_permissoes', 'permissao_id', 'user_id');
+    }
 }

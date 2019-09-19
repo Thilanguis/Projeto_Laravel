@@ -84,8 +84,8 @@
                         </table>
                     </div>
                 </div>
-                @endif 
-                <p><b>Total de Pacientes Cadastrados: {{ $pacientes->count() }}</b></p>
+                @endif  
+                <p><b>Total de Pacientes encontrados: {{ $pacientes->count() }}</b></p>
         </div>
     </div>
 @endsection
