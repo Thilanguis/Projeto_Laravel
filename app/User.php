@@ -34,4 +34,12 @@ class User extends Authenticatable
     public function permissoes() {
         return $this->belongsToMany('App\Permissao', 'users_permissoes', 'permissao_id', 'user_id');
     }
+
+    public function hasPermissao($nomePermissao){
+        $permissaoExiste = $this->permissoes->filter(function($permissao) use($nomePermissao){
+            return $permissao->nome == $nomePermissao;
+        });
+
+        return $permissaoExiste->count() > 0;
+    }
 }

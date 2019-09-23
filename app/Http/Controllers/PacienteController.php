@@ -63,6 +63,9 @@ class PacienteController extends Controller
         $paciente = Paciente::find($pacienteId);
         // dd($paciente->users, Auth::user()->pacientes);
         // dd($paciente->users);
+       
+        $this->authorize('update-post');
+
         return view('show', [
             'paciente' => $paciente
         ]);
@@ -122,6 +125,7 @@ class PacienteController extends Controller
 
     public function deletar($pacienteId, Request $request){
         $paciente = Paciente::find($pacienteId);
+        dd($paciente);
         // $pacientes->enderecos()->ativos()->get(); ativos() esta chamando scopeAtivos
         $paciente->enderecos()->delete();
         $paciente->users()->detach(Auth::user()->id);

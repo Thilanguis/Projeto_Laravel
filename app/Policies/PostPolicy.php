@@ -56,4 +56,8 @@ class PostPolicy
     {
         //
     }
+
+    public function updatePost(User $user) {
+        return $user->hasPermissao('admin');
+    }
 }

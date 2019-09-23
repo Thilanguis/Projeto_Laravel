@@ -87,6 +87,9 @@
                 @endif  
                 <p><b>Total de Pacientes encontrados: {{ $pacientes->count() }}</b></p>
         </div>
+        @can('update-post', $receita)
+            <h1>Administrador</h1>
+        @endcan
     </div>
 @endsection
 @section('js')
