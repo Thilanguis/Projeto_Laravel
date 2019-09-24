@@ -86,8 +86,9 @@
                 </div>
                 @endif  
                 <p><b>Total de Pacientes encontrados: {{ $pacientes->count() }}</b></p>
+                <p><b>Total de Pacientes do usuário: {{ $quantidadePacientesUsuario->count() }}</b></p>
         </div>
-        @can('update-post', $receita)
+        @can('update-post')
             <h1>Administrador</h1>
         @endcan
     </div>

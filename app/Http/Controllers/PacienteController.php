@@ -26,7 +26,14 @@ class PacienteController extends Controller
             $valor = $request->busca;
             $pacientes = collect(); //inicializa uma colection vazia, tem métodos como count e outros exemplos
             $endereco = collect(); //inicializa uma colection vazia, tem métodos como count e outros exemplos
-        
+            
+            $paciente = collect(); //inicializa uma colection vazia, tem métodos como count e outros exemplos
+            $paciente = Paciente::query();
+            $paciente->whereHas('users', function($query){
+                $query->where('users_id', Auth::user()->id);
+            });
+            
+
             if($request->input()){
 
                 $pacientes = Paciente::query();
@@ -40,7 +47,7 @@ class PacienteController extends Controller
                     $pacientes = $pacientes->get();                     
                 }
                 
-                   
+                
                 if($pacientes->count() == 0 && $valor != null){
                     $request->session()->flash('error', "O paciente {$valor} não foi encontrado");
                 } else if($valor == null){
@@ -54,59 +61,60 @@ class PacienteController extends Controller
         }
         
         return view('tasks', [
-            'pacientes' => $pacientes
-        ]);
-    }
-
-    // Mostrar detalhes do paciente
-    public function show($pacienteId, Request $request){
+            'pacientes' => $pacientes,
+            'quantidadePacientesUsuario' => $paciente->get()
+            ]);
+        }
+        
+        // Mostrar detalhes do paciente
+        public function show($pacienteId, Request $request){
         $paciente = Paciente::find($pacienteId);
         // dd($paciente->users, Auth::user()->pacientes);
         // dd($paciente->users);
-       
+        
         $this->authorize('update-post');
-
+        
         return view('show', [
             'paciente' => $paciente
-        ]);
-    }
-
-    // Gravar Pacientes
-    public function gravar(Request $request){
-    try{
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:pacientes,nome|max:30',
-            'sobrenome' => 'required|max:30',
+            ]);
+        }
+    
+        // Gravar Pacientes
+        public function gravar(Request $request){
+            try{
+                $validator = Validator::make($request->all(), [
+                    'name' => 'required|unique:pacientes,nome|max:30',
+                    'sobrenome' => 'required|max:30',
             'rua' => 'required|array|max:30',
             'rua.*' => 'required|string|distinct|max:30',
             'numero' => 'required|array|max:30',
             'numero.*' => 'required|string|distinct|max:30',
             'complemento' => 'max:30',
-        ]);
-    
-        if ($validator->fails()) {
-            return redirect('/adicionar')
+            ]);
+            
+            if ($validator->fails()) {
+                return redirect('/adicionar')
                 ->withInput()
                 ->withErrors($validator);
-        }
-        
-        $paciente = new Paciente;
-        $paciente->nome = $request->name;
-        $paciente->sobrenome = $request->sobrenome;
-
-        $paciente->save();
-        foreach($request->input('rua') as $key => $rua){
-            $endereco = new Endereco;
-            $endereco->rua = $request->rua[$key];
-            $endereco->numero = $request->numero[$key];
-            $endereco->complemento = $request->complemento[$key];
-            $endereco->pacientes_id = $paciente->id;
+            }
             
-            $endereco->save();
-        }
-
-        $paciente->users()->attach(Auth::user()->id); //atribuindo o id do usuário logado no relacionamento paciente->users
-
+            $paciente = new Paciente;
+            $paciente->nome = $request->name;
+            $paciente->sobrenome = $request->sobrenome;
+            
+            $paciente->save();
+            foreach($request->input('rua') as $key => $rua){
+                $endereco = new Endereco;
+                $endereco->rua = $request->rua[$key];
+                $endereco->numero = $request->numero[$key];
+                $endereco->complemento = $request->complemento[$key];
+                $endereco->pacientes_id = $paciente->id;
+            
+                $endereco->save();
+            }
+            
+            $paciente->users()->attach(Auth::user()->id); //atribuindo o id do usuário logado no relacionamento paciente->users
+            
         $request->session()->flash('success', "O paciente {$paciente->nome} foi adicionado com sucesso");
         // $request->session()->flash('success', [
         //     'mensagem1' => 'olá! eu sou a primeira mensagem'
@@ -121,19 +129,18 @@ class PacienteController extends Controller
 
     return redirect('/');
     // return redirect('/')->back()->withInput();
-    }
+}
 
-    public function deletar($pacienteId, Request $request){
-        $paciente = Paciente::find($pacienteId);
-        dd($paciente);
-        // $pacientes->enderecos()->ativos()->get(); ativos() esta chamando scopeAtivos
-        $paciente->enderecos()->delete();
-        $paciente->users()->detach(Auth::user()->id);
-        $paciente->delete();
-        $request->session()->flash('success', "O paciente {$paciente->nome} foi adicionado com sucesso");
+public function deletar($pacienteId, Request $request){
+    $paciente = Paciente::find($pacienteId);
+    // $pacientes->enderecos()->ativos()->get(); ativos() esta chamando scopeAtivos
+    $paciente->enderecos()->delete();
+    $paciente->users()->detach(Auth::user()->id);
+    $paciente->delete();
+    $request->session()->flash('success', "O paciente {$paciente->nome} foi adicionado com sucesso");
     
-        return redirect('/');
-    }
+    return redirect('/');
+}
 
     public function indexEditar($pacienteId, Request $request) {
         $paciente = Paciente::find($pacienteId);
